@@ -1,0 +1,120 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://prefab/delta/Delta.cs" type="Script" id=1]
+[ext_resource path="res://models/delta/base.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://models/delta/platform.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://models/delta/connector.obj" type="ArrayMesh" id=4]
+[ext_resource path="res://models/delta/arm.obj" type="ArrayMesh" id=5]
+
+[node name="Delta" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+script = ExtResource( 1 )
+axisB = -30.0
+connectorPathCA = NodePath("Base/ArmConnectorC/ArmC/ConnectorA")
+connectorPathCB = NodePath("Base/ArmConnectorC/ArmC/ConnectorB")
+axisC = -30.0
+platformPath = NodePath("Base/Platform")
+armCPath = NodePath("Base/ArmConnectorC/ArmC")
+connectorPathAA = NodePath("Base/ArmConnectorA/ArmA/ConnectorA")
+axisA = -30.0
+connectorPathAB = NodePath("Base/ArmConnectorA/ArmA/ConnectorB")
+connectorPathBA = NodePath("Base/ArmConnectorB/ArmB/ConnectorA")
+connectorPathBB = NodePath("Base/ArmConnectorB/ArmB/ConnectorB")
+armAPath = NodePath("Base/ArmConnectorA/ArmA")
+armBPath = NodePath("Base/ArmConnectorB/ArmB")
+
+[node name="Base" type="Spatial" parent="."]
+
+[node name="base" type="MeshInstance" parent="Base"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = ExtResource( 2 )
+material/0 = null
+
+[node name="ArmConnectorA" type="Spatial" parent="Base"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50 )
+
+[node name="ArmA" type="Spatial" parent="Base/ArmConnectorA"]
+transform = Transform( 0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 350, 0, 0 )
+
+[node name="arm" type="MeshInstance" parent="Base/ArmConnectorA/ArmA"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = ExtResource( 5 )
+material/0 = null
+
+[node name="ConnectorA" type="Spatial" parent="Base/ArmConnectorA/ArmA"]
+transform = Transform( -0.461537, 1.78258e-06, 0.887121, -1.73573e-06, -1, 1.10636e-06, 0.887121, -1.02917e-06, 0.461537, 0, 50, -400 )
+
+[node name="connector" type="MeshInstance" parent="Base/ArmConnectorA/ArmA/ConnectorA"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = ExtResource( 4 )
+material/0 = null
+
+[node name="ConnectorB" type="Spatial" parent="Base/ArmConnectorA/ArmA"]
+transform = Transform( -0.461537, 1.78258e-06, 0.887121, -1.73573e-06, -1, 1.10636e-06, 0.887121, -1.02917e-06, 0.461537, 0, -50, -400 )
+
+[node name="connector" type="MeshInstance" parent="Base/ArmConnectorA/ArmA/ConnectorB"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = ExtResource( 4 )
+material/0 = null
+
+[node name="ArmConnectorB" type="Spatial" parent="Base"]
+transform = Transform( -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0, 1, 0, 0, 50 )
+
+[node name="ArmB" type="Spatial" parent="Base/ArmConnectorB"]
+transform = Transform( 0.866043, 0, -0.50001, 0, 1, 0, 0.50001, 0, 0.866043, 350, 0, 0 )
+
+[node name="arm" type="MeshInstance" parent="Base/ArmConnectorB/ArmB"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = ExtResource( 5 )
+material/0 = null
+
+[node name="ConnectorA" type="Spatial" parent="Base/ArmConnectorB/ArmB"]
+transform = Transform( -0.461537, -1.72752e-06, 0.887121, 1.68212e-06, -1, -1.07219e-06, 0.887121, 9.97386e-07, 0.461537, 0, 50, -400 )
+
+[node name="connector" type="MeshInstance" parent="Base/ArmConnectorB/ArmB/ConnectorA"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = ExtResource( 4 )
+material/0 = null
+
+[node name="ConnectorB" type="Spatial" parent="Base/ArmConnectorB/ArmB"]
+transform = Transform( -0.461537, -1.72752e-06, 0.887121, 1.68212e-06, -1, -1.07219e-06, 0.887121, 9.97386e-07, 0.461537, 0, -50, -400 )
+
+[node name="connector" type="MeshInstance" parent="Base/ArmConnectorB/ArmB/ConnectorB"]
+transform = Transform( 1, 0, 0, 0, -1.78814e-07, -1, 0, 1, -2.08616e-07, 0, 0, 0 )
+mesh = ExtResource( 4 )
+material/0 = null
+
+[node name="ArmConnectorC" type="Spatial" parent="Base"]
+transform = Transform( -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0, 1, 0, 0, 50 )
+
+[node name="ArmC" type="Spatial" parent="Base/ArmConnectorC"]
+transform = Transform( 0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 350, 0, 0 )
+
+[node name="arm" type="MeshInstance" parent="Base/ArmConnectorC/ArmC"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = ExtResource( 5 )
+material/0 = null
+
+[node name="ConnectorA" type="Spatial" parent="Base/ArmConnectorC/ArmC"]
+transform = Transform( -0.461538, 1.30766e-07, 0.88712, -1.27329e-07, -1, 8.11602e-08, 0.88712, -7.54979e-08, 0.461538, 0, 50, -400 )
+
+[node name="connector" type="MeshInstance" parent="Base/ArmConnectorC/ArmC/ConnectorA"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = ExtResource( 4 )
+material/0 = null
+
+[node name="ConnectorB" type="Spatial" parent="Base/ArmConnectorC/ArmC"]
+transform = Transform( -0.461538, 1.30766e-07, 0.88712, -1.27329e-07, -1, 8.11602e-08, 0.88712, -7.54979e-08, 0.461538, 0, -50, -400 )
+
+[node name="connector" type="MeshInstance" parent="Base/ArmConnectorC/ArmC/ConnectorB"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = ExtResource( 4 )
+material/0 = null
+
+[node name="Platform" type="Spatial" parent="Base"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000549316, -0.000854492, -971.021 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Base/Platform"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+mesh = ExtResource( 3 )
+material/0 = null

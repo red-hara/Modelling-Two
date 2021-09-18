@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://prefab/delta/Trace.cs" type="Script" id=1]
+[ext_resource path="res://prefab/delta/ControlledDelta.tscn" type="PackedScene" id=2]
+[ext_resource path="res://code/Controller.cs" type="Script" id=3]
+
+[node name="MainScene" type="Spatial"]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1500 )
+near = 100.0
+far = 100000.0
+
+[node name="EverythingRobot" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 500, 0 )
+
+[node name="ControlledDelta" parent="EverythingRobot" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+target = Vector3( -4.57764e-05, -9.15527e-05, -625 )
+attachedPath = NodePath("../Attach")
+
+[node name="Attach" type="Spatial" parent="EverythingRobot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57764e-05, -9.15527e-05, -625 )
+
+[node name="Trace" type="ImmediateGeometry" parent="EverythingRobot"]
+script = ExtResource( 1 )
+tracePath = NodePath("../Attach")
+
+[node name="Controller" type="Node" parent="."]
+script = ExtResource( 3 )
+controllablePath = NodePath("../EverythingRobot/ControlledDelta")

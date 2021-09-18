@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/base.obj-f95898fdcf18ef9197f4c4cdc0c96add.mesh"
+
+[deps]
+
+files=[ "res://.import/base.obj-f95898fdcf18ef9197f4c4cdc0c96add.mesh" ]
+
+source_file="res://models/delta/base.obj"
+dest_files=[ "res://.import/base.obj-f95898fdcf18ef9197f4c4cdc0c96add.mesh", "res://.import/base.obj-f95898fdcf18ef9197f4c4cdc0c96add.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
