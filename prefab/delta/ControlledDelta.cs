@@ -77,7 +77,7 @@ public class ControlledDelta : Spatial, Controllable
         Vector3 axisV = rotation.Xform(Vector3.Left);
         Vector3 circleCenter = rotation.Xform(new Vector3(Delta.baseRadius - Delta.platformRadius, 0, Delta.baseLift));
         float circleRadius = Delta.armLength;
-        var maybeSolution = Delta.SphereCircleIntersectionAngles(Delta.connectorRadius, position, circleCenter, axisU, axisV, circleRadius);
+        var maybeSolution = Geometry.SphereCircleIntersectionAngles(Delta.connectorRadius, position, circleCenter, axisU, axisV, circleRadius);
         if (maybeSolution is null)
         {
             return null;
@@ -111,7 +111,8 @@ public class ControlledDelta : Spatial, Controllable
 
     public Vector3? SetJoints((float A, float B, float C) joints)
     {
-        if (!(robot is null)) {
+        if (!(robot is null))
+        {
             robot.axisA = joints.A;
             robot.axisB = joints.B;
             robot.axisC = joints.C;

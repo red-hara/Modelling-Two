@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://prefab/delta/Trace.cs" type="Script" id=1]
+[ext_resource path="res://code/Trace.cs" type="Script" id=1]
 [ext_resource path="res://prefab/delta/ControlledDelta.tscn" type="PackedScene" id=2]
 [ext_resource path="res://code/Controller.cs" type="Script" id=3]
 

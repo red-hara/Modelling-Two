@@ -2,38 +2,34 @@ using Godot;
 using System;
 
 [Tool]
-public class Delta : Spatial
+public class Railed : Spatial
 {
     public const float platformRadius = 120;
-    public const float baseRadius = 350;
-    public const float baseLift = 50;
-    public const float armLength = 400;
+    public const float railRadius = 620;
     public const float connectorRadius = 800;
 
     [Export]
     public float axisA;
-
     [Export]
     public float axisB;
-
     [Export]
     public float axisC;
 
     [Export]
+    public NodePath sliderAPath;
+    private Spatial sliderA;
+
+    [Export]
+    public NodePath sliderBPath;
+    private Spatial sliderB;
+
+    [Export]
+    public NodePath sliderCPath;
+    private Spatial sliderC;
+
+    [Export]
     public NodePath platformPath;
     private Spatial platform;
-
-    [Export]
-    public NodePath armAPath;
-    private Spatial armA;
-
-    [Export]
-    public NodePath armBPath;
-    private Spatial armB;
-
-    [Export]
-    public NodePath armCPath;
-    private Spatial armC;
 
     [Export]
     private NodePath connectorPathAA;
@@ -61,10 +57,10 @@ public class Delta : Spatial
 
     public override void _Ready()
     {
+        sliderA = GetNode<Spatial>(sliderAPath);
+        sliderB = GetNode<Spatial>(sliderBPath);
+        sliderC = GetNode<Spatial>(sliderCPath);
         platform = GetNode<Spatial>(platformPath);
-        armA = GetNode<Spatial>(armAPath);
-        armB = GetNode<Spatial>(armBPath);
-        armC = GetNode<Spatial>(armCPath);
 
         connectors = new Spatial[]{
             GetNode<Spatial>(connectorPathAA),
@@ -78,48 +74,47 @@ public class Delta : Spatial
 
     public override void _Process(float delta)
     {
-        armA.RotationDegrees = new Vector3(0.0f, axisA, 0.0f);
-        armB.RotationDegrees = new Vector3(0.0f, axisB, 0.0f);
-        armC.RotationDegrees = new Vector3(0.0f, axisC, 0.0f);
+        sliderA.Translation = new Vector3(0, 0, axisA);
+        sliderB.Translation = new Vector3(0, 0, axisB);
+        sliderC.Translation = new Vector3(0, 0, axisC);
 
         position = Forward() ?? platform.Translation;
         platform.Translation = position;
+
         ManageConnectors();
     }
-
     private void ManageConnectors()
     {
         float[] axis = new float[]{
-            Mathf.Deg2Rad(axisA),
-            Mathf.Deg2Rad(axisB),
-            Mathf.Deg2Rad(axisC)
+            axisA,
+            axisB,
+            axisC
         };
         for (int index = 0; index < 3; index++)
         {
-            Vector3 armPosition = ArmPosition(axis[index], index);
-            Vector3 delta = platform.Translation - armPosition;
-            float angleZ = Mathf.Atan2(delta.y, delta.x) - index * Mathf.Pi * 2 / 3;
+            // Vector3 sliderPosition = SliderPosition(axis[index], index);
+            Transform origin = SliderTransform(axis[index], index);
+            Vector3 delta = platform.Translation - origin.origin;
+            delta = origin.basis.Inverse().Xform(delta);
+
+            float angleZ = Mathf.Atan2(delta.y, delta.x);
             float angleY = Mathf.Atan2(delta.z, Mathf.Sqrt(delta.x * delta.x + delta.y * delta.y));
             connectors[index * 2].Transform = new Transform(
-                new Quat(Vector3.Up, -axis[index]) * new Quat(Vector3.Back, angleZ) * new Quat(Vector3.Up, -angleY - Mathf.Pi / 2),
-                new Vector3(0, 50, -armLength)
+                new Quat(Vector3.Back, angleZ) * new Quat(Vector3.Up, -angleY - Mathf.Pi / 2),
+                new Vector3(50, 0, 0)
             );
             connectors[index * 2 + 1].Transform = new Transform(
-                new Quat(Vector3.Up, -axis[index]) * new Quat(Vector3.Back, angleZ) * new Quat(Vector3.Up, -angleY - Mathf.Pi / 2),
-                new Vector3(0, -50, -armLength)
+                new Quat(Vector3.Back, angleZ) * new Quat(Vector3.Up, -angleY - Mathf.Pi / 2),
+                new Vector3(-50, 0, 0)
             );
         }
     }
 
     public Vector3? Forward()
     {
-        float a = Mathf.Deg2Rad(axisA);
-        float b = Mathf.Deg2Rad(axisB);
-        float c = Mathf.Deg2Rad(axisC);
-
-        Vector3 centerA = ArmPosition(a, 0);
-        Vector3 centerB = ArmPosition(b, 1);
-        Vector3 centerC = ArmPosition(c, 2);
+        Vector3 centerA = SliderPosition(axisA, 0);
+        Vector3 centerB = SliderPosition(axisB, 1);
+        Vector3 centerC = SliderPosition(axisC, 2);
 
         Vector3[] solution = Geometry.SphereIntersection3(centerA, centerB, centerC, connectorRadius);
         if (solution.Length == 0)
@@ -133,12 +128,17 @@ public class Delta : Spatial
         return solution[1];
     }
 
-    private Vector3 ArmPosition(float axis, int index)
+    private Vector3 SliderPosition(float axis, int index)
     {
-        Transform rotationOrigin = new Transform(new Quat(Vector3.Back, Mathf.Deg2Rad(index * 120)), Vector3.Zero) *
-            new Transform(Basis.Identity, new Vector3(baseRadius - platformRadius, 0, baseLift));
-        Quat rotation = new Quat(Vector3.Up, axis);
-        Vector3 end = rotation.Xform(new Vector3(0, 0, -armLength));
-        return rotationOrigin.Xform(end);
+        Transform railOrigin = new Transform(new Quat(Vector3.Forward, Mathf.Deg2Rad(index * 120)), Vector3.Zero) *
+            new Transform(new Quat(Vector3.Right, Mathf.Deg2Rad(30)), new Vector3(0, railRadius - platformRadius, 0));
+        return railOrigin.Xform(new Vector3(0, 0, axis));
+    }
+
+    private Transform SliderTransform(float axis, int index)
+    {
+        Transform railOrigin = new Transform(new Quat(Vector3.Forward, Mathf.Deg2Rad(index * 120)), Vector3.Zero) *
+            new Transform(new Quat(Vector3.Right, Mathf.Deg2Rad(30)), new Vector3(0, railRadius - platformRadius, 0));
+        return railOrigin * new Transform(Basis.Identity, new Vector3(0, 0, axis));
     }
 }
