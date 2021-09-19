@@ -6,22 +6,25 @@ public class Controller : Node
     [Export]
     public NodePath controllablePath;
 
+    [Export]
+    float depth = -250;
+
     private LinkedList<Command> commands = new LinkedList<Command>();
     private Command currentCommand;
 
     public override void _Ready()
     {
         float velocity = 250;
-        AddCommand(new Linear(new Vector3(0, -400, -600), velocity));
-        AddCommand(new Linear(new Vector3(-400, -400, -600), velocity));
+        AddCommand(new Linear(new Vector3(0, -200, depth), velocity));
+        AddCommand(new Linear(new Vector3(-200, -200, depth), velocity));
         AddCommand(new Wait(0.5f));
-        AddCommand(new Linear(new Vector3(-400, 400, -600), velocity));
+        AddCommand(new Linear(new Vector3(-200, 200, depth), velocity));
         AddCommand(new Wait(0.5f));
-        AddCommand(new Linear(new Vector3(400, 400, -600), velocity));
+        AddCommand(new Linear(new Vector3(200, 200, depth), velocity));
         AddCommand(new Wait(0.5f));
-        AddCommand(new Linear(new Vector3(400, -400, -600), velocity));
+        AddCommand(new Linear(new Vector3(200, -200, depth), velocity));
         AddCommand(new Wait(1));
-        AddCommand(new Linear(new Vector3(0, 0, -1000), velocity * 4));
+        AddCommand(new Linear(new Vector3(0, 0, 2 * depth), velocity * 4));
     }
 
     public override void _Process(float delta)

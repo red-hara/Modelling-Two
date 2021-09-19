@@ -4,6 +4,7 @@ using System;
 [Tool]
 public class Railed : Spatial
 {
+    public const float railLength = 1000;
     public const float platformRadius = 120;
     public const float railRadius = 620;
     public const float connectorRadius = 800;
@@ -128,14 +129,14 @@ public class Railed : Spatial
         return solution[1];
     }
 
-    private Vector3 SliderPosition(float axis, int index)
+    public static Vector3 SliderPosition(float axis, int index)
     {
         Transform railOrigin = new Transform(new Quat(Vector3.Forward, Mathf.Deg2Rad(index * 120)), Vector3.Zero) *
             new Transform(new Quat(Vector3.Right, Mathf.Deg2Rad(30)), new Vector3(0, railRadius - platformRadius, 0));
         return railOrigin.Xform(new Vector3(0, 0, axis));
     }
 
-    private Transform SliderTransform(float axis, int index)
+    public static Transform SliderTransform(float axis, int index)
     {
         Transform railOrigin = new Transform(new Quat(Vector3.Forward, Mathf.Deg2Rad(index * 120)), Vector3.Zero) *
             new Transform(new Quat(Vector3.Right, Mathf.Deg2Rad(30)), new Vector3(0, railRadius - platformRadius, 0));

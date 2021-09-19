@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://prefab/railed/Railed.tscn" type="PackedScene" id=1]
+[ext_resource path="res://prefab/railed/ControlledRailed.cs" type="Script" id=2]
+
+[node name="ControlledRailed" type="Spatial"]
+script = ExtResource( 2 )
+target = Vector3( -2.67029e-05, -2.28882e-05, -500 )
+attachedPath = NodePath("")
+railedPath = NodePath("Railed")
+
+[node name="Railed" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+axisC = 275.001
+axisA = 275.001
+axisB = 275.001
