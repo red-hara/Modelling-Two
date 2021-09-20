@@ -3,7 +3,7 @@ using Godot;
 public class Joint : Command
 {
     private Vector3? target;
-    private (float axisA, float axisB, float axisC) targetJoint;
+    private (float axisA, float axisB, float axisC)? targetJoint;
     private float velocity;
 
     public Joint(Vector3 target, float velocity)

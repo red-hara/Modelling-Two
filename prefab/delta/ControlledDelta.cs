@@ -42,7 +42,7 @@ public class ControlledDelta : Spatial, Controllable
         }
     }
 
-    private (float AxisA, float AxisB, float AxisC)? Inverse(Vector3 target)
+    public (float A, float B, float C)? Inverse(Vector3 target)
     {
         target += new Vector3(0, 0, 25);
         float? a = InverseAxis(target, 0);
@@ -96,9 +96,9 @@ public class ControlledDelta : Spatial, Controllable
         if (!(maybeSolution is null) && !(robot is null))
         {
             var solution = maybeSolution ?? (0, 0, 0);
-            robot.axisA = solution.AxisA;
-            robot.axisB = solution.AxisB;
-            robot.axisC = solution.AxisC;
+            robot.axisA = solution.A;
+            robot.axisB = solution.B;
+            robot.axisC = solution.C;
             return (solution);
         }
         return null;
