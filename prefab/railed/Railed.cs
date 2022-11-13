@@ -93,7 +93,6 @@ public class Railed : Spatial
         };
         for (int index = 0; index < 3; index++)
         {
-            // Vector3 sliderPosition = SliderPosition(axis[index], index);
             Transform origin = SliderTransform(axis[index], index);
             Vector3 delta = platform.Translation - origin.origin;
             delta = origin.basis.Inverse().Xform(delta);

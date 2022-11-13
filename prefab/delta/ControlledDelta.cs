@@ -125,4 +125,9 @@ public class ControlledDelta : Spatial, Controllable
     {
         return (robot.axisA, robot.axisB, robot.axisC);
     }
+
+    public float MaximumJointVelocity()
+    {
+        return 60;
+    }
 }

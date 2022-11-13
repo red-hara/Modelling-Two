@@ -126,4 +126,9 @@ public class ControlledRailed : Spatial, Controllable
     {
         return (robot.axisA, robot.axisB, robot.axisC);
     }
+
+    public float MaximumJointVelocity()
+    {
+        return 1000;
+    }
 }

@@ -6,11 +6,10 @@
 [node name="ControlledRailed" type="Spatial"]
 script = ExtResource( 2 )
 target = Vector3( -2.67029e-05, -2.28882e-05, -500 )
-attachedPath = NodePath("")
 railedPath = NodePath("Railed")
+attachedPath = NodePath("")
 
 [node name="Railed" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-axisC = 275.001
 axisA = 275.001
 axisB = 275.001
+axisC = 275.001
