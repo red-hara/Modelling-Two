@@ -35,9 +35,9 @@ public class ControlledRailed : Spatial, Controllable
 
     public override void _Process(float delta)
     {
-        if (attachedPath != null)
+        Spatial attach = GetNodeOrNull<Spatial>(attachedPath);
+        if (!(attach is null))
         {
-            Spatial attach = GetNode<Spatial>(attachedPath);
             attach.Translation = robot.Position;
         }
     }
