@@ -17,7 +17,7 @@ public class Linear : Command
     /// <summary>Create new linear motion.</summary>
     /// <param name="target">The target position.</param>
     /// <param name="velocity">The motion velocity, millimeter per
-    /// second.<param>
+    /// second.</param>
     public Linear(Vector3 target, float velocity)
     {
         this.target = target;
